@@ -1,0 +1,35 @@
+1.查看一开放端口：
+firewall-cmd --list-ports
+
+2.开启端口
+firewall-cmd --zone=public --add-port=80/tcp --permanent
+
+3.重启防火墙
+systemctl restart firewalld.service
+注：只有重启了防火墙，端口才算开启成功
+
+4.启动redis
+redis-cli -h 127.0.0.1 -p 6379 -a ilanniredis
+
+5.删除文件
+rm -rf 目录/文件名
+
+6.启动tomcat用动态的方式，就是所有都在控制台输出：
+./catalina.sh run
+关闭时用ctrl+c退出并关闭服务
+
+
+
+
+
+
+root 1314@feifei          ik?o6&dVW=i2
+
+root  1314@feifei
+
+
+
+Acess denied for user 'root'@'localhost'(using password:YES)
+
+
+redis password:ilanniredis
