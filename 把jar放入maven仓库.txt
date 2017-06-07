@@ -1,0 +1,15 @@
+1.使用命令导入:
+mvn install:install-file -DgroupId=com.qsfs  -DartifactId=qsfs  -Dversion=1.0 
+-Dfile=文件的绝对路径   -Dpackaging=jar
+
+2.引入
+pom文件引入的时候为:
+<dependency>
+
+    <groupId>com.qsfs </groupId>
+
+    <artifactId>qsfs</artifactId>
+
+    <version>1.0</version>
+
+</dependency>

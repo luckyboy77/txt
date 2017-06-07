@@ -1,0 +1,451 @@
+连接数据源目前有5中方法（有待更新）：
+1.使用spring自带的DriverManagerDataSource
+<bean id="dataSource1" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" /> 
+        <property name="url" value="jdbc:mysql://localhost:3306/test" /> 
+        <property name="username" value="root" /> 
+         <property name="password" value="root123" />
+</bean>
+在DriverManagerDataSource源码中，Spring只提供了连接的四个参数：数据库连接方言，连接的数据库地址，用户名，密码。 
+然而在实际的生产中，我们需要连接的效率和执行效率或者大规模用户访问时的效率要求比较高的时候我们就要使用到数据库连接池，一般使用的都是第三方提供的插件。
+2.使用第三方插件：
+（1）apache的dbcp插件连接
+<bean id="dataSource"
+        class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+       <!-- 使用properties来配置 数据库连接池-->
+       <!-- 数据库连接方言 -->
+        <property name="driverClassName"  value="${jdbc_driverClassName}"></property>
+        <property name="url" value="${jdbc_url}"></property>
+        <property name="username" value="${jdbc_username}"></property>
+        <property name="password" value="${jdbc_password}"></property>
+        <!-- 初始化连接大小 -->
+        <property name="initialSize" value="10" />
+        <!-- 连接池最大使用连接数量 -->
+        <property name="maxActive" value="100" />
+        <!-- 连接池最小空闲 -->
+        <property name="minIdle" value="10" />
+        <!-- 超时等待时间以毫秒为单位  -->  
+        <property name="maxWait" value="100"/> 
+        <!-- 设置在自动回收超时连接的时候打印连接的超时错误  -->  
+        <property name="logAbandoned" value="true"/>  
+        <!-- 设置自动回收超时连接 -->  
+        <property name="removeAbandoned"  value="true"/> 
+        <!-- 自动回收超时时间(以秒数为单位) -->  
+        <property name="removeAbandonedTimeout" value="10"/>  
+</bean>
+在apache的dbcp插件连接BasicDataSource需要我们在maven中配置如下的代码来添加相应的jar包：
+<dependency>  
+            <groupId>commons-dbcp</groupId>  
+            <artifactId>commons-dbcp</artifactId>  
+            <version>1.2.2</version>  
+</dependency>
+关于apache的dbcp插件连接中的参数解释： 
+initialSize 池启动时创建的连接数量 
+maxActive 同一时间可以从池分配的最多连接数量。设置为0时表示无限制。 
+maxIdle 池里不会被释放的最多空闲连接数量。设置为0时表示无限制。 
+maxOpenPreparedStatements 同一时间能够从语句池里分配的已备语句的最大数量。设置为0时表示无限制。 
+maxWait 在抛出异常之前，池等待连接被回收的最长时间（当没有可用连接时）。设置为-1表示无限等待。 
+minEvictableIdleTimeMillis 连接保持空闲而不被驱逐的最长时间。 
+minIdle 在不新建连接的条件下，池中保持空闲的最少连接数。 
+poolPreparedStatements 是否对已备语句进行池管理（布尔值）。
+（2）c3p0插件连接
+<bean name="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" 
+   p:driverClass="com.mysql.jdbc.Driver" 
+   p:jdbcUrl="jdbc:mysql://localhost:3306/test"
+   p:user="root"
+   p:password="123456" >       
+</bean>
+c3p0插件连接时，也需要下载相应的jar包，一般推荐使用c3p0-0.9.1.jar,比较稳定：
+<dependency>  
+            <groupId>c3p0</groupId>  
+            <artifactId>c3p0</artifactId>  
+            <version>0.9.1</version>  
+</dependency>
+3.使用JNDI连接数据源
+在使用 Tomcat服务器 + SpringFramework 进行JavaEE项目的开发部署的时候可以在Tomcat的配置文件中进行JDBC数据源的配置，具体步骤如下（这里省略了工程的建立步骤）：
+1） 添加如下代码到tomcat的conf目录下的server.xml中：
+Xml代码：
+<Context>   
+    <Resource name="jdbc/demoDB" auth="Container"   
+    type="javax.sql.DataSource"  
+    driverClassName="com.mysql.jdbc.Driver"  
+    url="jdbc:mysql://localhost:3306/demo"  
+    username="root"  
+    password="123"  
+    maxActive="50"  
+    maxIdle="30"  
+    maxWait="10000" />  
+</Context> 
+完成上述步骤数据源的连接池配置已经完成，但是为了提高项目的可移植性，最好将上述第二步的内容放入到工程的META-INF目录的context.xml中（这个文件需要自行建立）：
+Xml代码：
+<?xml version="1.0" encoding="UTF-8"?>  
+<Context>  
+      <Resource name="jdbc/demoDB" auth="Container"   
+      type="javax.sql.DataSource"  
+      driverClassName="com.mysql.jdbc.Driver"  
+      url="jdbc:mysql://localhost:3306/demo"  
+      username="root"  
+      password="123"  
+      maxActive="50"  
+      maxIdle="30"  
+      maxWait="10000" />  
+</Context>
+2）在Spring的配置文件，如applicationContext.xml中配置配置如下内容：
+Xml代码：
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">  
+<beans>  
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">  
+        <property name="jndiName">  
+            <value>java:comp/env/jdbc/demoDB</value>  
+        </property>  
+    </bean>  
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+        <property name="dataSource">  
+            <ref bean="dataSource" />  
+        </property>  
+    </bean>  
+      
+    <!-- 这里是自定义的数据库基础操作类 -->  
+    <bean id="sqlBaseDAO" class="demo.BaseDAOImpl">  
+        <property name="jdbcTemplate">  
+            <ref bean="jdbcTemplate" />  
+        </property>  
+    </bean>  
+</beans> 
+3）建立数据库基础操作类 BaseDAOImpl
+接口代码：
+Java代码：
+public interface BaseDAO {  
+  
+    public List<Map<String, Object>> select(String sql);  
+  
+    public void update(String how);  
+  
+    public void insert(Object obj);  
+  
+    public void insert(String sql);  
+  
+    public void save(String sql);  
+  
+    public void edit(String sql);  
+  
+    public void execute(String sql, PreparedStatementCallback callback);  
+      
+    public void delete(String sql);  
+  
+    public void insertObjects(String[] sqls);  
+  
+    public Connection getConnection() throws Exception;  
+  
+}  
+实现类代码：
+Java代码
+public class BaseDAOImpl implements BaseDAO {  
+    private JdbcTemplate jdbcTemplate;  
+  
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate){  
+        this.jdbcTemplate = jdbcTemplate;  
+    }  
+  
+    public void insert(Object obj) {  
+  
+    }  
+  
+    public void insert(String sql) {  
+        jdbcTemplate.execute(sql);  
+    }  
+  
+    public void insertObjects(String[] sqls) {  
+        jdbcTemplate.batchUpdate(sqls);  
+    }  
+  
+    public List<Map<String, Object>> select(String sql) {  
+        return jdbcTemplate.queryForList(sql);  
+    }  
+  
+    public void update(String how) {  
+        jdbcTemplate.update(how);  
+  
+    }  
+  
+    public void delete(String sql) {  
+        if (sql == null) {  
+            return;  
+        }  
+        jdbcTemplate.execute(sql);  
+    }  
+  
+    public void edit(String sql) {  
+        if (sql == null) {  
+            return;  
+        }  
+        jdbcTemplate.execute(sql);  
+    }  
+  
+    public void execute(String sql, PreparedStatementCallback callback) {  
+        jdbcTemplate.execute(sql, callback);  
+    }  
+      
+    public void save(String sql) {  
+        if (sql == null) {  
+            return;  
+        }  
+        jdbcTemplate.execute(sql);  
+    }  
+  
+    public Connection getConnection() throws Exception {  
+        Connection conn = jdbcTemplate.getDataSource().getConnection();  
+        return conn;  
+    }  
+  
+}
+这里存在一个疑问：
+运行如下代码：
+Java代码  收藏代码
+public static void main(String[] args) {  
+    org.springframework.jndi.JndiObjectFactoryBean jofb = new org.springframework.jndi.JndiObjectFactoryBean();  
+    javax.sql.DataSource ds = (javax.sql.DataSource)jofb;  
+    org.springframework.jdbc.core.JdbcTemplate jTemplate = new org.springframework.jdbc.core.JdbcTemplate();  
+    jTemplate.setDataSource(ds);  
+}  
+ 
+会报告如下的错误：
+Out代码  收藏代码
+Exception in thread "main" java.lang.ClassCastException: org.springframework.jndi.JndiObjectFactoryBean cannot be cast to javax.sql.DataSource  
+从JndiObjectFactoryBean的源码中也可以看到，JndiObjectFactoryBean的父类或所继承的接口都没有继承javax.sql.DataSource接口，所以一下的配置中：
+Xml代码  收藏代码
+<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">  
+    <property name="jndiName">  
+        <value>java:comp/env/jdbc/portalDataService</value>  
+    </property>  
+</bean>  
+<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+    <property name="dataSource">  
+        <ref bean="dataSource" />  
+    </property>  
+</bean>  
+ 对org.springframework.jdbc.core.JdbcTemplate的dataSource属性的注入为何能够成功？
+ 
+带着这样的疑问去iteye中提问，没有得到详细的解答，但是iteye的提示功能似乎很不错，在问题的下方给出了相关内容参考提示，进入到《从源代码解读spring之DataSource实现和FactoryBean模式》这个帖子中，看完以后大受启发。一下是从这篇帖子摘抄出来的内容：
+ 
+ 
+再看源码后发现，JndiObjectFactoryBean实现了FactoryBean接口，下面是org.springframework.beans.factory.FactoryBean源代码里一段注释： 
+ 
+Java代码  收藏代码
+/**  
+ * Interface to be implemented by objects used within a BeanFactory  
+ * that are themselves factories. If a bean implements this interface,  
+ * it is used as a factory, not directly as a bean.  
+ *  
+ * <p><b>NB: A bean that implements this interface cannot be used  
+ * as a normal bean.</b> A FactoryBean is defined in a bean style,  
+ * but the object exposed for bean references is always the object  
+ * that it creates.  
+ */   
+ 
+翻译过来是说：所有实现FactoryBean接口的类都被当作工厂来使用，而不是简单的直接当作bean来使用，FactoryBean实现类里定义了要生产的对象，并且由FactoryBean实现类来造该对象的实例，看到这里聪明的大概已经能猜出个八九不离十了吧，我们回过头来看看JndiObjectFactoryBean的实现细节 ：
+ 
+Java代码  收藏代码
+private Object jndiObject;    
+/**  
+ * Look up the JNDI object and store it.  
+ * 广义上说是造对象的过程，就本例而言，是通过JNDI获得DataSource对象  
+ */    
+public void afterPropertiesSet() throws IllegalArgumentException, NamingException {    
+    super.afterPropertiesSet();    
+    
+    if (this.proxyInterface != null) {    
+        if (this.defaultObject != null) {    
+            throw new IllegalArgumentException(    
+                    "'defaultObject' is not supported in combination with 'proxyInterface'");    
+        }    
+        // We need a proxy and a JndiObjectTargetSource.    
+        this.jndiObject = JndiObjectProxyFactory.createJndiObjectProxy(this);    
+    }    
+    
+    else {    
+        if (!this.lookupOnStartup || !this.cache) {    
+            throw new IllegalArgumentException(    
+                "Cannot deactivate 'lookupOnStartup' or 'cache' without specifying a 'proxyInterface'");    
+        }    
+        if (this.defaultObject != null && getExpectedType() != null &&    
+                !getExpectedType().isInstance(this.defaultObject)) {    
+            throw new IllegalArgumentException("Default object [" + this.defaultObject +    
+                    "] of type [" + this.defaultObject.getClass().getName() +    
+                    "] is not of expected type [" + getExpectedType().getName() + "]");    
+        }    
+        // Locate specified JNDI object.    
+        this.jndiObject = lookupWithFallback();    
+    }    
+}    
+/**  
+ * Return the singleton JNDI object.  
+ * 返回JNDI对象（DataSource对象）  
+ */    
+public Object getObject() {    
+    return this.jndiObject;    
+}    
+    
+public Class getObjectType() {    
+    if (this.proxyInterface != null) {    
+        return this.proxyInterface;    
+    }    
+    else if (this.jndiObject != null) {    
+        return this.jndiObject.getClass();    
+    }    
+    else {    
+        return getExpectedType();    
+    }    
+}    
+ 
+对于JndiObjectFactoryBean对象，spring IOC容器启动时确实造了它的对象，只不过这时是工厂本身，spring会自动调用工厂里的afterPropertiesSet()方法去造真正需要的bean，然后调用getObject()和getObjectType()方法返回已造好的对象和类型，再将其准确的注入依赖它的其他bean里面。
+
+ 
+好吧，也许上面org.springframework.beans.factory.FactoryBean的注释看起来像家长教育孩子该怎么怎么，那么Spring到底是怎么实现这种思想的呢？参考《Spring技术内幕》中2.5.3节对FactoryBean的实现的讲解，结合Spring的源码可以看到：
+     常见的工厂Bean是怎样实现的，这些FactoryBean为应用生成需要的对象，这些对象往往是经过特殊处理的，比如像 ProxyFactoryBean 这样的特殊 Bean。FactoryBean 的生产特性是在getBean中起作用的，我们看到下面的调用：
+
+再来看FactoryBean特性的实现：
+ 
+Java代码  收藏代码
+//该方法在org.springframework.beans.factory.support.AbstractBeanFactory类中  
+protected Object getObjectForBeanInstance(  
+        Object beanInstance, String name, String beanName, RootBeanDefinition mbd) {  
+  
+    // Don't let calling code try to dereference the factory if the bean isn't a factory.  
+    // 如果这里不是对FactoryBean的调用,那么结束处理。  
+    if (BeanFactoryUtils.isFactoryDereference(name) && !(beanInstance instanceof FactoryBean)) {  
+        throw new BeanIsNotAFactoryException(transformedBeanName(name), beanInstance.getClass());  
+    }  
+  
+    // Now we have the bean instance, which may be a normal bean or a FactoryBean.  
+    // If it's a FactoryBean, we use it to create a bean instance, unless the  
+    // caller actually wants a reference to the factory.  
+    if (!(beanInstance instanceof FactoryBean) || BeanFactoryUtils.isFactoryDereference(name)) {  
+        return beanInstance;  
+    }  
+  
+    Object object = null;  
+    if (mbd == null) {  
+        object = getCachedObjectForFactoryBean(beanName);  
+    }  
+    if (object == null) {  
+        // Return bean instance from factory.  
+        FactoryBean<?> factory = (FactoryBean<?>) beanInstance;  
+        // Caches object obtained from FactoryBean if it is a singleton.  
+        if (mbd == null && containsBeanDefinition(beanName)) {  
+            mbd = getMergedLocalBeanDefinition(beanName);  
+        }  
+        boolean synthetic = (mbd != null && mbd.isSynthetic());  
+        //这里从FactoryBean中得到bean。   
+        object = getObjectFromFactoryBean(factory, beanName, !synthetic);  
+    }  
+    return object;  
+}  
+  
+//该方法在org.springframework.beans.factory.support.FactoryBeanRegistrySupport类中  
+protected Object getObjectFromFactoryBean(FactoryBean factory, String beanName, boolean shouldPostProcess) {  
+    if (factory.isSingleton() && containsSingleton(beanName)) {  
+        synchronized (getSingletonMutex()) {  
+            Object object = this.factoryBeanObjectCache.get(beanName);  
+            if (object == null) {  
+                object = doGetObjectFromFactoryBean(factory, beanName, shouldPostProcess);  
+                this.factoryBeanObjectCache.put(beanName, (object != null ? object : NULL_OBJECT));  
+            }  
+            return (object != NULL_OBJECT ? object : null);  
+        }  
+    }  
+    else {  
+        return doGetObjectFromFactoryBean(factory, beanName, shouldPostProcess);  
+    }  
+}  
+  
+//该方法在org.springframework.beans.factory.support.FactoryBeanRegistrySupport类中  
+private Object doGetObjectFromFactoryBean(  
+        final FactoryBean factory, final String beanName, final boolean shouldPostProcess)  
+        throws BeanCreationException {  
+  
+    Object object;  
+    //这里调用factory的getObject方法来从FactoryBean中得到bean。  
+    try {  
+        if (System.getSecurityManager() != null) {  
+            AccessControlContext acc = getAccessControlContext();  
+            try {  
+                object = AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {  
+                    public Object run() throws Exception {  
+                            return factory.getObject();  
+                        }  
+                    }, acc);  
+            }  
+            catch (PrivilegedActionException pae) {  
+                throw pae.getException();  
+            }  
+        }  
+        else {  
+            object = factory.getObject();  
+        }  
+    }  
+    catch (FactoryBeanNotInitializedException ex) {  
+        throw new BeanCurrentlyInCreationException(beanName, ex.toString());  
+    }  
+    catch (Throwable ex) {  
+        throw new BeanCreationException(beanName, "FactoryBean threw exception on object creation", ex);  
+    }  
+      
+    // Do not accept a null value for a FactoryBean that's not fully  
+    // initialized yet: Many FactoryBeans just return null then.  
+    if (object == null && isSingletonCurrentlyInCreation(beanName)) {  
+        throw new BeanCurrentlyInCreationException(  
+                beanName, "FactoryBean which is currently in creation returned null from getObject");  
+    }  
+  
+    if (object != null && shouldPostProcess) {  
+        try {  
+            object = postProcessObjectFromFactoryBean(object, beanName);  
+        }  
+        catch (Throwable ex) {  
+            throw new BeanCreationException(beanName, "Post-processing of the FactoryBean's object failed", ex);  
+        }  
+    }  
+  
+    return object;  
+}  
+     这里返回的已经是作为工厂的 FactoryBean 生产的产品，并不是 FactoryBean 本身。这种FactoryBean的机制可以为我们提供一个很好的封装机制，比如封装Proxy、RMI、JNDI等。经过对FactoryBean实现过程的原理分析，相信读者会对getObject方法有很深刻的印象。这个方法就是主要的FactoryBean 的接口，需要实现特定的工厂的生产过程，至于这个生产过程是怎样和IoC容器整合的，就是我们在上面分析的内容。
+ 
+那么返回的类型是怎么确定为javax.sql.DataSource类型的呢？回头再看在context.xml中的数据源配置可以看到：
+ 
+Xml代码  收藏代码
+type="javax.sql.DataSource"  
+这样一句。然后在去细看JndiObjectFactoryBean类中的afterPropertiesSet方法的具体代码所以一切都明了了。
+ 
+综上所述，这里主要还是要对Spring的FactoryBean模式的理解最为重要。
+
+4.使用阿里巴巴Durid数据源DruidDataSource自定义封装高效防并发JDBCUtils
+<!-- 数据库连接池 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		destroy-method="close">
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="maxActive" value="10" />
+		<property name="minIdle" value="5" />
+	</bean>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
