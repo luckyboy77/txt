@@ -1,0 +1,2 @@
+1.ÏÂÔØjenkins
+docker pull jenkins

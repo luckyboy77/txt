@@ -1,0 +1,68 @@
+官方文档: https://docs.docker.com/engine/installation/linux/centos/
+https://my.oschina.net/u/1540325/blog/702260
+使用harbor搭建docker
+
+1.安装docker
+1.1 yum安装
+1.1.1确保yum包是最新的 sudo yum update
+1.1.2安装git:     sudo yum install git 
+
+1.2添加yum仓库源
+sudo tee /etc/yum.repos.d/docker.repo <<-'EOF'
+[dockerrepo]
+name=Docker Repository
+baseurl=https://yum.dockerproject.org/repo/main/centos/7/
+enabled=1
+gpgcheck=1
+gpgkey=https://yum.dockerproject.org/gpg
+EOF
+
+1.3安装docker包sudo yum install docker-engine 
+1.4使用docker服务 sudo systemctl enable docker.service
+
+1.5启动 docker daemon守护进程 sudo systemctl start docker
+1.6检验安装是否成功 sudo docker run --rm hello-world 
+(出现 Unable to find image 'hello-world:latest' locally  ...则成功)
+
+2.安装docker Compose
+2.1安装 curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  (慢)
+2.2添加可执行权限 chmod +x /usr/local/bin/docker-compose
+2.3测试安装是否成功 docker-compose --version        1.9
+
+3.搭建Harbor
+3.1克隆源码: git clone https://github.com/vmware/harbor
+  (慢)
+3.2修改配置: cd /root/harbor/make
+             vim harbor.cfg
+3.3修改hostname为当前ip地址或域名,其他可默认,登录账号密码可设置(admin,Harbor12345)
+3.4生成相关配置 cd /root/harbor/make
+                ./prepare
+3.5编译 image 并启动 cd /root/harbor/make/dev
+		     docker-compose up -d
+3.6出现Creating network "deploy_default" with the default driver ... 则ok ,共生成5个Contianer -> Proxy,Registry,UI,Mysql,Log
+  (慢)
+3.7出现:ERROR: error pulling image configuration ...执行以下:切换为国内镜像仓库
+echo "DOCKER_OPTS=\"\$DOCKER_OPTS --registry-mirror=http://f2d6cb40.m.daocloud.io\"" | sudo tee -a /etc/default/docker
+sudo service docker restart
+(可能网络问题:可重新执行docker-compose up -d )
+
+4.push 镜像
+4.1、设置 http 仓库地址
+修改/lib/systemd/system/docker.service文件，
+添加ExecStart=/usr/bin/docker daemon -H fd:// --insecure-registry 192.168.10.41
+或ExecStart=/usr/bin/docker --insecure-registry 192.168.10.41
+或(参考http://tianshili.blog.51cto.com/5050423/1845976)
+EnvironmentFile=/etc/sysconfig/docker
+ExecStart=/usr/bin/dockerd $OPTIONS   (需要新增配置文件/etc/sysconfig/docker 添加内容 OPTIONS='--insecure-registry 192.168.10.41:80'
+DOCKER_CERT_PATH=/etc/docker  INSECURE_REGISTRY='--insecure-registry 192.168.10.41:80')
+
+
+启动:
+(如果修改了配置)systemctl daemon-reload
+service docker start 
+cd /root/harbor/make/dev  docker-compose start
+访问http://ip地址
+
+
+

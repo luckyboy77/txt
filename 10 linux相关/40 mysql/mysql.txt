@@ -1,0 +1,21 @@
+centos中用docker创建mysql容器
+1.进入linux后，使用docker命令下载Msql，命令如下：docker pull mysql:5.7,显示：
+5.7:Pulling from mysql......Status:Downloaded newer image for mysql:5.7
+则正确
+2.启动mysql的docker容器，命令如下：
+docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.6
+这里的容器名称叫：ms01，你也可以自己设定一个名称，这里的12345，是你想要设置的数据库密码，对应的用 户名是root，但是一定要牢记密码。映射宿主机的端口3306到容器的端口3306，仓库名mysql和标签（tag）唯一确定了要指定的镜像，其实如果这里只有一个mysql也有必要要tag.
+3.查看已经运行的所有容器，命令如：
+docker ps
+4.启动成功后，可以使用如下命令：
+docker exec -it 容器id或容器名称 bash，进入mysql命令行
+mysql -uroot -proot 输入mysql的用户名和密码登录
+
+
+
+关闭服务器后重启docker容器中的mysql
+1.查看没有启动的docker容器：docker ps -a
+2.启动mysql容器：docker start containerID
+3.打开Mysql:docker exec -it mysql bash
+4.mysql -uroot -proot
+username:root    password:root

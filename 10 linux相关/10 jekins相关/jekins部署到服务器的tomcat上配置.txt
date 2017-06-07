@@ -1,0 +1,25 @@
+#Tomcat根目录
+TOMCAT_HOME="/usr/tomcat/apache-tomcat-8.5.8"
+#端口
+TOMCAT_PORT=8181
+#TOMCAT_PID用于检测Tomcat是否在运行
+TOMCAT_PID=`lsof -n -P -t -i :${TOMCAT_PORT}`
+
+#如果Tomcat还在运行
+
+warPath="${TOMCAT_HOME}/webapps/ssmtwo_web-0.0.1-SNAPSHOT/"
+warFile="${TOMCAT_HOME}/webapps/ssmtwo_web-0.0.1-SNAPSHOT.war"
+
+#如果文件或者文件夹存在则删除
+deleteWhenExist(){
+ if [ -e $1 ]; then
+  rm -rf $1
+ fi
+}
+
+deleteWhenExist ${warPath}
+deleteWhenExist ${warFile}
+
+#拷贝新编译的包到Tomcat
+cp ssmtwo/ssmtwo_web/target/ssmtwo_web-0.0.1-SNAPSHOT.war ${TOMCAT_HOME}/webapps/
+

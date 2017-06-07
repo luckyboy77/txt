@@ -1,0 +1,23 @@
+1.git clone https://github.com/rancher/rancher.git
+
+2.docker run -d --restart=always -p 8080:8080 rancher/server（这边安装默认的server版本。要安装稳定版本可以加上tag，参考官方文档可知）
+
+
+rancher   系统登录密码：rancher
+username:xupf
+password:1314feifei
+
+harbor    系统登录密码：docker
+email:xupengfei151369@126.com
+username:xupf
+password:Feifei1314
+
+jenkins  username:admin
+	 password:admin
+
+
+access key(username):6B2A58A4FC78115DFB9D
+secret key(password):p8xvsnawDfcjD6kLdLaRiPxjt7CGsmPiWq4LVXP1
+
+
+http://192.168.228.138/project

@@ -1,0 +1,16 @@
+CentOS 7.0默认使用的是firewall作为防火墙，这里改为iptables防火墙。
+firewall：
+systemctl start firewalld.service#启动firewall
+systemctl stop firewalld.service#停止firewall
+systemctl disable firewalld.service#禁止firewall开机启动
+
+开启80端口
+ firewall-cmd --zone=public --add-port=80/tcp --permanent
+出现success表明添加成功
+命令含义：
+--zone #作用域
+--add-port=80/tcp  #添加端口，格式为：端口/通讯协议
+--permanent   #永久生效，没有此参数重启后失效
+
+ftp://192.168.228.137
+ftpuser
