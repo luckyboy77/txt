@@ -1,0 +1,26 @@
+1.解压
+tar -zxvf apache-maven-3.3.9-bin.tar.gz
+
+2.添加环境变量
+打开 /etc/profile ,添加如下内容：
+export M2_HOME=/root/workspace/software/apache-maven-3.3.9
+export MAVEN_OPTS=-Xms256m-Xmx512m
+export PATH=$PATH:$M2_HOME/bin
+
+3.执行profile让新配置生效
+source /etc/profile
+
+4.验证
+[root@master ~]# mvn -v
+Apache Maven 3.3.9 (bb52d8502b132ec0a5a3f4c09453c07478323dc5; 2015-11-11T00:41:47+08:00)
+Maven home: /root/workspace/software/apache-maven-3.3.9
+Java version: 1.7.0_80, vendor: Oracle Corporation
+Java home: /usr/java/jdk1.7.0_80/jre
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "3.10.0-327.10.1.el7.x86_64", arch: "amd64", family: "unix"
+[root@master ~]#
+
+
+
+
+
