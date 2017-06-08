@@ -18,6 +18,12 @@ rm -rf 目录/文件名
 ./catalina.sh run
 关闭时用ctrl+c退出并关闭服务
 
+7.新建
+mkdir /var/www/test
+
+8.复制
+cp –r jdk1.8.0_111 /usr/java
+
 
 
 
