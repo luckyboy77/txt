@@ -1,0 +1,8 @@
+/**
+ *
+ * @name ${type_name}
+ * @description
+ * @author xupf
+ * @version 1.0
+ * @date ${date}
+ */
