@@ -1,0 +1,46 @@
+用户名：ftpuser
+密码：ftpuser
+
+公司邮箱：xupf/1314feifei?
+
+mail.wangreat.com      xupf/1314feifei?
+
+139svn:reader/123456Aa?
+
+192svn:guest/123456Aa?
+
+jira: http://139.196.101.111:8083/login.jsp
+      ussername:xupf
+      password:1314feifei
+
+
+git:   http://192.168.10.100/
+       username:xupf
+       password:1314feifei
+
+
+github:  email:xupengfei151369@126.com
+	 username:feifeidegao
+         password:1314feifei
+
+gitlab:  email:xupengfei151369@126.com
+	 username:xupf
+         password:1314+fei
+
+aliyun:  username:feifeirumeng026439839
+         password:1314feifei
+
+rap: xupf_104859/1314feifei
+
+http://docs.saas.hand-china.com/docs/hap-dev/zh_CN/latest/         //汉德hap框架api
+
+LTAIjUP8xNlUEUlI
+zetFkxwsh6O5Orm11nAlvfQ3HY7Un9
+
+
+oa:   oa.wangreat.com     username:xupf      password: feifei1314
+
+
+
+
+http://b.360.cn/other/onionwormfix
