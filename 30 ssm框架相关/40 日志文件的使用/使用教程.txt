@@ -1,4 +1,13 @@
 如果使用的是logback.xml的话，一定要把pom.xml中的slf4j的jar包去掉，因为logback的jar包已经包括了slf4j的
+pom.xml中需要加入如下jar包:
+<!-- 实现slf4j接口并整合 -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
+
 
 
 如果使用的是log4j.xml的话，需要修改其中的日志文件输出的路径和错误日志输出的路径
