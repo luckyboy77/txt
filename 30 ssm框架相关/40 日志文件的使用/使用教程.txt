@@ -1,0 +1,4 @@
+如果使用的是logback.xml的话，一定要把pom.xml中的slf4j的jar包去掉，因为logback的jar包已经包括了slf4j的
+
+
+如果使用的是log4j.xml的话，需要修改其中的日志文件输出的路径和错误日志输出的路径
