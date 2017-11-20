@@ -1,0 +1,13 @@
+1.将war包放入webapps下面
+
+2.修改conf下的server.xml文件
+
+3.找到service中的host添加如下：
+<Context path="" docBase="H:\apache-tomcat-8.0.39\WDWManage" reloadable="true" debug="0" crossContext="true"/>
+注：Context指上下文，相信当你看到这步的时候，你一定没少接触过这个词。不赘述
+path指虚拟目录，与浏览器访问的路径相关，如果直接是path="/"，访问就是http://localhost:8080/XX.jsp,如果为空串，也是一样，如果加了项目名，访问路径也要加，如path="/home",访问就是http://localhost:8080/home/XX.jsp
+docBase指实际存在路径，一般在硬盘里。如果我们的文件home直接放在了E盘下，那docBase=“E:\home”
+reloadable指有文件更新时，是否重新加载，一般设置为true，设置为true后，不需重新启动，就能验证我们的改动，不过修改了java文件后，可以重新编译需要一小会，在IDE下的控制台里可以看见输出，一般没有输出滚动出来的时候，就可以了。这三个一般经常设置。
+
+4.如果要配置多个项目不同的端口的话，可以这么干：
+将server.xml中的service复制一份，改变其中的端口，如果有前台页面的话走第三步，之后启动验证
