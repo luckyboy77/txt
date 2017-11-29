@@ -1,4 +1,4 @@
-package com.wdw.common.util;
+package com.password.utils;
 
 import java.util.List;
 import java.util.Map;
@@ -58,11 +58,17 @@ public class RedisUtil {
 	        config.setTestOnReturn(false);
 	        jedisPool = new JedisPool(
 	                config,
-	                "r-uf628f8d84985f04.redis.rds.aliyuncs.com", 
+	                "localhost", 
 	                6379,
-	                30000,
-	                "scp4RFV2wsx"
+	                30000
 	        );
+//	        jedisPool = new JedisPool(
+//	        		config,
+//	        		"localhost", 
+//	        		6379,
+//	        		30000,
+//	        		""
+//	        		);
 	    }
 
 	    /**
@@ -78,7 +84,7 @@ public class RedisUtil {
 	            log.info("JedisPool init success！");
 	        }
 	        Jedis jds = jedisPool.getResource();
-	        jds.select(8);
+	        jds.select(10);
 	        return jds;
 	    }
 
