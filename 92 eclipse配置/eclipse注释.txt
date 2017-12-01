@@ -20,8 +20,8 @@ Types:
 
 Methods:
 /** 
- * @Title: ${enclosing_method} 
- * @Description:  
+ * @Title: ${enclosing_method}
+ * @author xupf   
  * @return ${return_type}
  */
 
