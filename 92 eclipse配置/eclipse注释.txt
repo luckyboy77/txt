@@ -1,8 +1,34 @@
-/**
- *
- * @name ${type_name}
- * @description
- * @author xupf
- * @version 1.0
- * @date ${date}
+Files:
+/**   
+ * @Title: ${file_name}  
+ * @Description:  
+ * @author xupf   
+ * @date ${date} ${time} 
+ * @version V1.0   
+ */
+
+Types:
+/** 
+ * @ClassName: ${type_name} 
+ * @Description:  
+ * @author xupf 
+ * @date ${date} ${time} 
+ * 
+ * ${tags} 
+ */
+
+
+Methods:
+/** 
+ * @Title: ${enclosing_method} 
+ * @Description:  
+ * @return ${return_type}
+ */
+
+New Java Files:
+/** 
+ * @ClassName: ${type_name} 
+ * @Description:  
+ * @author xupf 
+ * @date ${date} ${time} 
  */
