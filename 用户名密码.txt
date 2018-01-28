@@ -49,3 +49,12 @@ http://b.360.cn/other/onionwormfix
 
 
 https://github.com/aliyun/oss-browser/blob/master/all-releases.md?spm=5176.doc61872.2.5.wKdxFt&file=all-releases.md
+
+
+
+
+
+
+47.96.180.131          root/1314feifei?         
+mysql root/1314@Feifei    ‘∂≥Ã¡¨Ω”  test_dev/Test@1314
+redis testRedis
