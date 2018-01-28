@@ -1,0 +1,6 @@
+回退到上一个版本
+git reset --hard HEAD^
+
+恢复之前最新的版本
+git reflog用来记录你的每一次命令
+git reset --hard 版本id
