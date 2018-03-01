@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50710
 File Encoding         : 65001
 
-Date: 2018-02-24 17:15:02
+Date: 2018-03-01 17:12:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -112,9 +112,9 @@ CREATE TABLE `rep_query_params` (
 -- Records of rep_query_params
 -- ----------------------------
 INSERT INTO `rep_query_params` VALUES ('61', '1', '姓名', 'name', null, 'STRING', null, null, 'STRING', '1', '1', '150', '150', 'COMBOBOX', 'SQL', 0x53454C454354200A7363762E6076616C7565602C0A7363762E6D65616E696E670A46524F4D200A7379735F636F64652073632C0A7379735F636F64655F76616C756520736376200A5748455245200A73632E636F64655F6964203D207363762E636F64655F6964200A414E442073632E60636F646560203D20275359532E53455827, 'N', 'Y', '2018-01-16 16:10:26', '0', '2018-02-24 17:12:46', null);
-INSERT INTO `rep_query_params` VALUES ('62', '1', '性别', 'sex', null, 'STRING', null, null, 'STRING', '2', '1', '150', '150', 'COMBOBOX', 'STRING', null, 'N', 'Y', '2018-01-16 16:10:26', '0', '2018-02-24 17:12:46', null);
-INSERT INTO `rep_query_params` VALUES ('63', '1', '地址', 'address', null, 'STRING', null, null, 'STRING', '1', '2', '150', '150', null, null, null, 'N', 'Y', '2018-01-16 16:10:26', '0', '2018-02-09 16:16:20', null);
-INSERT INTO `rep_query_params` VALUES ('64', '1', '年龄', 'age', null, 'STRING', null, null, 'STRING', '2', '2', '150', '150', null, null, null, 'N', 'Y', '2018-01-16 16:10:26', '0', '2018-02-09 16:16:20', null);
+INSERT INTO `rep_query_params` VALUES ('62', '1', '性别', 'sex', null, 'STRING', null, null, 'STRING', '2', '1', '150', '150', 'COMBOBOX', 'SQL', 0x53454C454354200A7363762E6076616C7565602C0A7363762E6D65616E696E670A46524F4D200A7379735F636F64652073632C0A7379735F636F64655F76616C756520736376200A5748455245200A73632E636F64655F6964203D207363762E636F64655F6964200A414E442073632E60636F646560203D20275359532E53455827, 'N', 'Y', '2018-01-16 16:10:26', '0', '2018-02-26 09:06:20', null);
+INSERT INTO `rep_query_params` VALUES ('63', '1', '地址', 'address', null, 'STRING', null, null, 'STRING', '1', '2', '150', '150', 'DATE', 'NULL', null, 'N', 'Y', '2018-01-16 16:10:26', '0', '2018-02-26 13:57:06', null);
+INSERT INTO `rep_query_params` VALUES ('64', '1', '年龄', 'age', null, 'STRING', null, null, 'STRING', '2', '2', '150', '150', 'COMBOBOX', 'STRING', 0x5B0A2020207B0A20202020202069643A224D52222C0A202020202020746578743A22E794B7220A202020207D2C0A2020207B0A20202020202069643A224D53222C0A202020202020746578743A22E5A5B3220A202020207D0A5D, 'N', 'Y', '2018-01-16 16:10:26', '0', '2018-02-26 13:58:35', null);
 INSERT INTO `rep_query_params` VALUES ('65', '6', 'name', 'name', null, 'STRING', null, null, 'STRING', '1', '1', '150', '150', null, null, null, 'Y', 'Y', '2018-01-17 20:02:58', '0', '2018-01-17 20:02:58', null);
 INSERT INTO `rep_query_params` VALUES ('66', '6', 'sex', 'sex', null, 'STRING', null, null, 'STRING', '1', '1', '150', '150', null, null, null, 'Y', 'Y', '2018-01-17 20:02:58', '0', '2018-01-17 20:02:58', null);
 INSERT INTO `rep_query_params` VALUES ('67', '6', 'address', 'address', null, 'STRING', null, null, 'STRING', '1', '1', '150', '150', null, null, null, 'Y', 'Y', '2018-01-17 20:02:59', '0', '2018-01-17 20:02:59', null);
@@ -122,8 +122,8 @@ INSERT INTO `rep_query_params` VALUES ('68', '6', 'age', 'age', null, 'STRING', 
 INSERT INTO `rep_query_params` VALUES ('124', '9', '融资企业', 'partnerName', null, 'STRING', null, null, 'STRING', '1', '1', '150', '150', null, null, null, 'N', 'Y', '2018-02-10 10:02:06', '0', '2018-02-10 10:10:51', null);
 INSERT INTO `rep_query_params` VALUES ('125', '9', '终端', 'zdName', null, 'STRING', null, null, 'STRING', '1', '1', '150', '150', null, null, null, 'N', 'Y', '2018-02-10 10:02:06', '0', '2018-02-10 10:10:51', null);
 INSERT INTO `rep_query_params` VALUES ('126', '9', '预测状态', 'approveStatus', null, 'STRING', null, null, 'STRING', '1', '1', '150', '150', null, null, null, 'N', 'Y', '2018-02-10 10:02:06', '0', '2018-02-10 10:10:51', null);
-INSERT INTO `rep_query_params` VALUES ('127', '9', '预测起始日期', 'startDate', null, 'STRING', null, null, 'STRING', '1', '2', '150', '150', null, null, null, 'N', 'Y', '2018-02-10 10:02:06', '0', '2018-02-10 10:10:51', null);
-INSERT INTO `rep_query_params` VALUES ('128', '9', '预测终止日期', 'endDate', null, 'STRING', null, null, 'STRING', '2', '2', '150', '150', null, null, null, 'N', 'Y', '2018-02-10 10:02:06', '0', '2018-02-10 10:10:51', null);
+INSERT INTO `rep_query_params` VALUES ('127', '9', '预测起始日期', 'startDate', null, 'STRING', null, null, 'STRING', '1', '2', '150', '150', 'DATE', 'NULL', null, 'N', 'Y', '2018-02-10 10:02:06', '0', '2018-02-26 16:49:28', null);
+INSERT INTO `rep_query_params` VALUES ('128', '9', '预测终止日期', 'endDate', null, 'STRING', null, null, 'STRING', '2', '2', '150', '150', 'DATE', 'NULL', null, 'N', 'Y', '2018-02-10 10:02:06', '0', '2018-02-26 16:49:28', null);
 
 -- ----------------------------
 -- Table structure for `rep_report_header`
@@ -143,7 +143,7 @@ CREATE TABLE `rep_report_header` (
   `update_time` datetime DEFAULT NULL,
   `update_user` int(11) DEFAULT NULL,
   PRIMARY KEY (`rep_header_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of rep_report_header
@@ -242,6 +242,27 @@ INSERT INTO `r_role_fun` VALUES ('234', '1', '16', '2018-02-24 14:05:10', '0', '
 INSERT INTO `r_role_fun` VALUES ('235', '1', '20', '2018-02-24 14:05:10', '0', '2018-02-24 14:05:10', null);
 
 -- ----------------------------
+-- Table structure for `r_role_resource`
+-- ----------------------------
+DROP TABLE IF EXISTS `r_role_resource`;
+CREATE TABLE `r_role_resource` (
+  `role_resource_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `role_id` bigint(20) DEFAULT NULL,
+  `resource_id` bigint(20) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `create_user` int(11) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `update_user` int(11) DEFAULT NULL,
+  PRIMARY KEY (`role_resource_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ----------------------------
+-- Records of r_role_resource
+-- ----------------------------
+INSERT INTO `r_role_resource` VALUES ('13', '1', '1', '2018-03-01 17:11:27', '1', '2018-03-01 17:11:27', null);
+INSERT INTO `r_role_resource` VALUES ('14', '1', '2', '2018-03-01 17:11:27', '1', '2018-03-01 17:11:27', null);
+
+-- ----------------------------
 -- Table structure for `r_role_user`
 -- ----------------------------
 DROP TABLE IF EXISTS `r_role_user`;
@@ -282,12 +303,13 @@ CREATE TABLE `sys_code` (
   `update_time` datetime DEFAULT NULL,
   `update_user` int(11) DEFAULT NULL,
   PRIMARY KEY (`code_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of sys_code
 -- ----------------------------
 INSERT INTO `sys_code` VALUES ('1', 'SYS.SEX', '性别', 'Y', '2018-02-24 16:20:22', '1', '2018-02-24 16:20:22', null);
+INSERT INTO `sys_code` VALUES ('2', 'SYS.REQUIRED', '是否必须', 'Y', '2018-02-27 09:17:15', '1', '2018-02-27 09:17:15', null);
 
 -- ----------------------------
 -- Table structure for `sys_code_value`
@@ -305,13 +327,15 @@ CREATE TABLE `sys_code_value` (
   `update_time` datetime DEFAULT NULL,
   `update_user` int(11) DEFAULT NULL,
   PRIMARY KEY (`code_value_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of sys_code_value
 -- ----------------------------
 INSERT INTO `sys_code_value` VALUES ('1', '1', 'MS', '女', null, 'Y', '2018-02-24 16:20:22', '1', '2018-02-24 16:20:22', null);
 INSERT INTO `sys_code_value` VALUES ('2', '1', 'MR', '男', null, 'Y', '2018-02-24 16:20:22', '1', '2018-02-24 16:20:22', null);
+INSERT INTO `sys_code_value` VALUES ('3', '2', 'Y', '是', null, 'Y', '2018-02-27 09:17:15', '1', '2018-02-27 09:17:15', null);
+INSERT INTO `sys_code_value` VALUES ('4', '2', 'N', '否', null, 'Y', '2018-02-27 09:17:15', '1', '2018-02-27 09:17:15', null);
 
 -- ----------------------------
 -- Table structure for `tb_cm_guide_category`
@@ -1953,7 +1977,7 @@ CREATE TABLE `tb_sys_profile` (
 -- ----------------------------
 -- Records of tb_sys_profile
 -- ----------------------------
-INSERT INTO `tb_sys_profile` VALUES ('1', 'WG_FND_OSS_SECRET', '阿里云配置(end_pointr,access_id,access_key,proxyAddr)', '2018-01-17 21:01:10', '1', '2018-02-01 13:47:27', '1');
+INSERT INTO `tb_sys_profile` VALUES ('1', 'WG_FND_OSS_SECRET', '阿里云配置(end_pointr,access_id,access_key,proxyAddr)', '2018-01-17 21:01:10', '1', '2018-02-27 13:35:26', '1');
 
 -- ----------------------------
 -- Table structure for `tb_sys_profile_value`
@@ -1975,7 +1999,7 @@ CREATE TABLE `tb_sys_profile_value` (
 -- ----------------------------
 -- Records of tb_sys_profile_value
 -- ----------------------------
-INSERT INTO `tb_sys_profile_value` VALUES ('1', '1', '1', 'GOBLE', 'oss-cn-shanghai.aliyuncs.com,LTAIjUP8xNlUEUlI,zetFkxwsh6O5Orm11nAlvfQ3HY7Un9,http://localhost123', '2018-01-17 21:01:10', '1', '2018-02-01 13:47:27', '1');
+INSERT INTO `tb_sys_profile_value` VALUES ('1', '1', '1', 'GOBLE', 'oss-cn-shanghai.aliyuncs.com,LTAIjUP8xNlUEUlI,zetFkxwsh6O5Orm11nAlvfQ3HY7Un9,http://localhost123', '2018-01-17 21:01:10', '1', '2018-02-27 13:35:26', '1');
 
 -- ----------------------------
 -- Table structure for `tb_template`
