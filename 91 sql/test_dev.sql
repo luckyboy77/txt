@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50710
 File Encoding         : 65001
 
-Date: 2018-03-01 17:12:41
+Date: 2018-03-05 09:10:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -79,6 +79,37 @@ INSERT INTO `rep_datasource` VALUES ('2', 'student', 'jdbc:mysql://localhost/stu
 INSERT INTO `rep_datasource` VALUES ('4', 'wdw_test', 'jdbc:mysql://rm-uf692em9t1yoo1058.mysql.rds.aliyuncs.com:3306/wdw_test?useUnicode=true&characterEncoding=utf-8', 'scf_uat', 'scf_uat123', '', '2018-02-10 09:12:38', '1', '2018-02-10 10:01:55', '1');
 
 -- ----------------------------
+-- Table structure for `rep_flex_vset`
+-- ----------------------------
+DROP TABLE IF EXISTS `rep_flex_vset`;
+CREATE TABLE `rep_flex_vset` (
+  `flex_value_set_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `flex_value_set_name` varchar(240) COLLATE utf8_bin DEFAULT NULL COMMENT '值集名称',
+  `validation_type` varchar(1) COLLATE utf8_bin DEFAULT NULL,
+  `description` varchar(240) COLLATE utf8_bin DEFAULT NULL COMMENT '描述',
+  `table_name` varchar(360) COLLATE utf8_bin DEFAULT NULL COMMENT '表名',
+  `limit_sql` text COLLATE utf8_bin COMMENT '限制语句',
+  `where_condition` text COLLATE utf8_bin COMMENT '查询条件',
+  `width` bigint(20) DEFAULT NULL COMMENT '宽度',
+  `height` bigint(20) DEFAULT NULL COMMENT '高度',
+  `title` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '标题',
+  `delayed_loading_flag` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '延迟加载',
+  `enabled_flag` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '生效标识',
+  `expand_method` text COLLATE utf8_bin COMMENT '扩展方法',
+  `create_time` datetime DEFAULT NULL,
+  `create_user` bigint(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `update_user` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`flex_value_set_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ----------------------------
+-- Records of rep_flex_vset
+-- ----------------------------
+INSERT INTO `rep_flex_vset` VALUES ('2', 'qq', null, 'ww', null, null, null, '0', '0', null, null, 'Y', null, '2018-03-02 16:52:53', '1', '2018-03-02 16:52:53', null);
+INSERT INTO `rep_flex_vset` VALUES ('4', 'ww', null, 'ww', null, null, null, '0', '0', null, null, 'Y', null, '2018-03-02 16:53:14', '1', '2018-03-02 16:53:14', null);
+
+-- ----------------------------
 -- Table structure for `rep_query_params`
 -- ----------------------------
 DROP TABLE IF EXISTS `rep_query_params`;
@@ -143,7 +174,7 @@ CREATE TABLE `rep_report_header` (
   `update_time` datetime DEFAULT NULL,
   `update_user` int(11) DEFAULT NULL,
   PRIMARY KEY (`rep_header_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of rep_report_header
@@ -199,6 +230,35 @@ INSERT INTO `rep_report_line` VALUES ('125', '9', '融资编号', 'apply_no', nu
 INSERT INTO `rep_report_line` VALUES ('126', '9', 'AR入池金额', 'ar_amount', null, 'DECIMAL', '14', '150', 'CENTER', 'CENTER', '10', 'Y', '2018-02-10 10:02:06', '0', '2018-02-10 10:05:47', null);
 
 -- ----------------------------
+-- Table structure for `rep_validate_table`
+-- ----------------------------
+DROP TABLE IF EXISTS `rep_validate_table`;
+CREATE TABLE `rep_validate_table` (
+  `validate_table_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `flex_value_set_id` bigint(20) DEFAULT NULL COMMENT '关联值集表的id',
+  `column_name` varchar(60) COLLATE utf8_bin DEFAULT NULL COMMENT '字段名',
+  `column_flag` varchar(1) COLLATE utf8_bin DEFAULT NULL COMMENT 'Lov所在字',
+  `condition_flag` varchar(1) COLLATE utf8_bin DEFAULT NULL COMMENT '作为条件',
+  `description` varchar(240) COLLATE utf8_bin DEFAULT NULL COMMENT '描述',
+  `width` bigint(20) DEFAULT NULL COMMENT '宽度',
+  `value_field` varchar(60) COLLATE utf8_bin DEFAULT NULL COMMENT 'Lov返回值',
+  `text_field` varchar(60) COLLATE utf8_bin DEFAULT NULL COMMENT 'Lov显示值',
+  `align` varchar(240) COLLATE utf8_bin DEFAULT NULL COMMENT '位置',
+  `hidden_flag` varchar(1) COLLATE utf8_bin DEFAULT NULL COMMENT '隐藏',
+  `enabled_flag` varchar(1) COLLATE utf8_bin DEFAULT NULL COMMENT '生效标识',
+  `column_alias` varchar(60) COLLATE utf8_bin DEFAULT NULL COMMENT '别名',
+  `create_time` datetime DEFAULT NULL,
+  `create_user` bigint(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `update_user` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`validate_table_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ----------------------------
+-- Records of rep_validate_table
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `r_role_fun`
 -- ----------------------------
 DROP TABLE IF EXISTS `r_role_fun`;
@@ -211,7 +271,7 @@ CREATE TABLE `r_role_fun` (
   `update_time` datetime NOT NULL,
   `update_user` int(11) DEFAULT NULL,
   PRIMARY KEY (`role_fun_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=236 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=252 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of r_role_fun
@@ -225,21 +285,22 @@ INSERT INTO `r_role_fun` VALUES ('144', '2', '8', '2017-12-29 22:04:45', '0', '2
 INSERT INTO `r_role_fun` VALUES ('145', '2', '9', '2017-12-29 22:04:45', '0', '2017-12-29 22:04:45', null);
 INSERT INTO `r_role_fun` VALUES ('146', '2', '4', '2017-12-29 22:04:45', '0', '2017-12-29 22:04:45', null);
 INSERT INTO `r_role_fun` VALUES ('147', '2', '5', '2017-12-29 22:04:45', '0', '2017-12-29 22:04:45', null);
-INSERT INTO `r_role_fun` VALUES ('221', '1', '2', '2018-02-24 14:05:10', '0', '2018-02-24 14:05:10', null);
-INSERT INTO `r_role_fun` VALUES ('222', '1', '3', '2018-02-24 14:05:10', '0', '2018-02-24 14:05:10', null);
-INSERT INTO `r_role_fun` VALUES ('223', '1', '13', '2018-02-24 14:05:10', '0', '2018-02-24 14:05:10', null);
-INSERT INTO `r_role_fun` VALUES ('224', '1', '6', '2018-02-24 14:05:10', '0', '2018-02-24 14:05:10', null);
-INSERT INTO `r_role_fun` VALUES ('225', '1', '7', '2018-02-24 14:05:10', '0', '2018-02-24 14:05:10', null);
-INSERT INTO `r_role_fun` VALUES ('226', '1', '8', '2018-02-24 14:05:10', '0', '2018-02-24 14:05:10', null);
-INSERT INTO `r_role_fun` VALUES ('227', '1', '9', '2018-02-24 14:05:10', '0', '2018-02-24 14:05:10', null);
-INSERT INTO `r_role_fun` VALUES ('228', '1', '4', '2018-02-24 14:05:10', '0', '2018-02-24 14:05:10', null);
-INSERT INTO `r_role_fun` VALUES ('229', '1', '5', '2018-02-24 14:05:10', '0', '2018-02-24 14:05:10', null);
-INSERT INTO `r_role_fun` VALUES ('230', '1', '18', '2018-02-24 14:05:10', '0', '2018-02-24 14:05:10', null);
-INSERT INTO `r_role_fun` VALUES ('231', '1', '21', '2018-02-24 14:05:10', '0', '2018-02-24 14:05:10', null);
-INSERT INTO `r_role_fun` VALUES ('232', '1', '14', '2018-02-24 14:05:10', '0', '2018-02-24 14:05:10', null);
-INSERT INTO `r_role_fun` VALUES ('233', '1', '15', '2018-02-24 14:05:10', '0', '2018-02-24 14:05:10', null);
-INSERT INTO `r_role_fun` VALUES ('234', '1', '16', '2018-02-24 14:05:10', '0', '2018-02-24 14:05:10', null);
-INSERT INTO `r_role_fun` VALUES ('235', '1', '20', '2018-02-24 14:05:10', '0', '2018-02-24 14:05:10', null);
+INSERT INTO `r_role_fun` VALUES ('236', '1', '2', '2018-03-02 14:57:22', '0', '2018-03-02 14:57:22', null);
+INSERT INTO `r_role_fun` VALUES ('237', '1', '3', '2018-03-02 14:57:22', '0', '2018-03-02 14:57:22', null);
+INSERT INTO `r_role_fun` VALUES ('238', '1', '13', '2018-03-02 14:57:22', '0', '2018-03-02 14:57:22', null);
+INSERT INTO `r_role_fun` VALUES ('239', '1', '6', '2018-03-02 14:57:22', '0', '2018-03-02 14:57:22', null);
+INSERT INTO `r_role_fun` VALUES ('240', '1', '7', '2018-03-02 14:57:22', '0', '2018-03-02 14:57:22', null);
+INSERT INTO `r_role_fun` VALUES ('241', '1', '8', '2018-03-02 14:57:22', '0', '2018-03-02 14:57:22', null);
+INSERT INTO `r_role_fun` VALUES ('242', '1', '9', '2018-03-02 14:57:22', '0', '2018-03-02 14:57:22', null);
+INSERT INTO `r_role_fun` VALUES ('243', '1', '4', '2018-03-02 14:57:22', '0', '2018-03-02 14:57:22', null);
+INSERT INTO `r_role_fun` VALUES ('244', '1', '5', '2018-03-02 14:57:22', '0', '2018-03-02 14:57:22', null);
+INSERT INTO `r_role_fun` VALUES ('245', '1', '18', '2018-03-02 14:57:22', '0', '2018-03-02 14:57:22', null);
+INSERT INTO `r_role_fun` VALUES ('246', '1', '21', '2018-03-02 14:57:22', '0', '2018-03-02 14:57:22', null);
+INSERT INTO `r_role_fun` VALUES ('247', '1', '14', '2018-03-02 14:57:22', '0', '2018-03-02 14:57:22', null);
+INSERT INTO `r_role_fun` VALUES ('248', '1', '15', '2018-03-02 14:57:22', '0', '2018-03-02 14:57:22', null);
+INSERT INTO `r_role_fun` VALUES ('249', '1', '22', '2018-03-02 14:57:22', '0', '2018-03-02 14:57:22', null);
+INSERT INTO `r_role_fun` VALUES ('250', '1', '16', '2018-03-02 14:57:22', '0', '2018-03-02 14:57:22', null);
+INSERT INTO `r_role_fun` VALUES ('251', '1', '20', '2018-03-02 14:57:22', '0', '2018-03-02 14:57:22', null);
 
 -- ----------------------------
 -- Table structure for `r_role_resource`
@@ -249,18 +310,27 @@ CREATE TABLE `r_role_resource` (
   `role_resource_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_id` bigint(20) DEFAULT NULL,
   `resource_id` bigint(20) DEFAULT NULL,
+  `fun_body_id` bigint(20) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   `create_user` int(11) DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   `update_user` int(11) DEFAULT NULL,
   PRIMARY KEY (`role_resource_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of r_role_resource
 -- ----------------------------
-INSERT INTO `r_role_resource` VALUES ('13', '1', '1', '2018-03-01 17:11:27', '1', '2018-03-01 17:11:27', null);
-INSERT INTO `r_role_resource` VALUES ('14', '1', '2', '2018-03-01 17:11:27', '1', '2018-03-01 17:11:27', null);
+INSERT INTO `r_role_resource` VALUES ('56', '2', '4', '3', '2018-03-02 11:20:00', '5', '2018-03-02 11:20:00', null);
+INSERT INTO `r_role_resource` VALUES ('57', '2', '5', '3', '2018-03-02 11:20:00', '5', '2018-03-02 11:20:00', null);
+INSERT INTO `r_role_resource` VALUES ('64', '2', '1', '2', '2018-03-02 11:20:15', '5', '2018-03-02 11:20:15', null);
+INSERT INTO `r_role_resource` VALUES ('65', '2', '2', '2', '2018-03-02 11:20:15', '5', '2018-03-02 11:20:15', null);
+INSERT INTO `r_role_resource` VALUES ('66', '2', '3', '2', '2018-03-02 11:20:15', '5', '2018-03-02 11:20:15', null);
+INSERT INTO `r_role_resource` VALUES ('78', '1', '4', '3', '2018-03-02 11:20:49', '5', '2018-03-02 11:20:49', null);
+INSERT INTO `r_role_resource` VALUES ('79', '1', '5', '3', '2018-03-02 11:20:49', '5', '2018-03-02 11:20:49', null);
+INSERT INTO `r_role_resource` VALUES ('86', '1', '1', '2', '2018-03-02 11:47:40', '1', '2018-03-02 11:47:40', null);
+INSERT INTO `r_role_resource` VALUES ('87', '1', '2', '2', '2018-03-02 11:47:40', '1', '2018-03-02 11:47:40', null);
+INSERT INTO `r_role_resource` VALUES ('88', '1', '3', '2', '2018-03-02 11:47:40', '1', '2018-03-02 11:47:40', null);
 
 -- ----------------------------
 -- Table structure for `r_role_user`
@@ -525,7 +595,7 @@ CREATE TABLE `tb_function_body` (
   `update_time` datetime NOT NULL,
   `update_user` int(11) DEFAULT NULL,
   PRIMARY KEY (`fun_body_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of tb_function_body
@@ -546,6 +616,7 @@ INSERT INTO `tb_function_body` VALUES ('18', 'Profile', null, '配置维护', 'p
 INSERT INTO `tb_function_body` VALUES ('19', 'system/Report.html?programName=1001', null, '测试报表', 'system/Report.html?programName=1001', 'Y', '1', '12', '2018-01-17 20:03:13', '1', '2018-01-17 20:03:13', null);
 INSERT INTO `tb_function_body` VALUES ('20', 'system/Report.html?programName=YCRC-0001', null, '预测-入池报表', 'system/Report.html?programName=YCRC-0001', 'Y', '1', '12', '2018-02-10 10:06:09', '1', '2018-02-10 10:06:09', null);
 INSERT INTO `tb_function_body` VALUES ('21', 'SysCode', null, '代码维护', 'system/SysCode.html', 'Y', '4', '4', '2018-02-24 14:03:32', '1', '2018-02-24 14:03:32', null);
+INSERT INTO `tb_function_body` VALUES ('22', 'ReportLov', null, '报表LOV', 'report/ReportLov.html', 'Y', '3', '11', '2018-03-02 14:55:19', '1', '2018-03-02 14:57:11', '1');
 
 -- ----------------------------
 -- Table structure for `tb_function_header`
@@ -1902,13 +1973,16 @@ CREATE TABLE `tb_resource_component` (
   `update_time` datetime NOT NULL,
   `update_user` int(11) DEFAULT NULL,
   PRIMARY KEY (`component_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of tb_resource_component
 -- ----------------------------
 INSERT INTO `tb_resource_component` VALUES ('1', 'NEW', '添加', '添加', '2', '2017-12-29 15:35:46', '1', '2017-12-29 21:55:37', '1');
 INSERT INTO `tb_resource_component` VALUES ('2', 'OPERATOR', '操作', '操作', '2', '2018-01-15 13:35:48', '1', '2018-01-15 13:35:48', null);
+INSERT INTO `tb_resource_component` VALUES ('3', 'QUERY', '查询', '查询', '2', '2018-03-01 17:23:26', '1', '2018-03-01 17:23:26', null);
+INSERT INTO `tb_resource_component` VALUES ('4', 'OPERATOR', '操作', '操作', '3', '2018-03-02 10:46:31', '5', '2018-03-02 10:46:31', null);
+INSERT INTO `tb_resource_component` VALUES ('5', 'NEW', '新建', '新建', '3', '2018-03-02 10:46:31', '5', '2018-03-02 10:46:31', null);
 
 -- ----------------------------
 -- Table structure for `tb_role`
@@ -1929,7 +2003,7 @@ CREATE TABLE `tb_role` (
 -- ----------------------------
 -- Records of tb_role
 -- ----------------------------
-INSERT INTO `tb_role` VALUES ('1', '超级管理员', '超级管理员', '2017-12-21 15:11:58', '0', '2018-02-24 14:05:10', '0', '');
+INSERT INTO `tb_role` VALUES ('1', '超级管理员', '超级管理员', '2017-12-21 15:11:58', '0', '2018-03-02 14:57:22', '0', '');
 INSERT INTO `tb_role` VALUES ('2', '管理员', '管理员', '2017-12-21 15:13:29', '0', '2017-12-29 22:04:45', '0', '');
 INSERT INTO `tb_role` VALUES ('3', '销售', '销售', '2017-12-22 11:11:46', '0', '2017-12-27 10:11:43', '0', '');
 INSERT INTO `tb_role` VALUES ('8', 'aa', 'aa', '2017-12-27 09:23:56', '0', '2017-12-27 10:10:53', '0', '');
