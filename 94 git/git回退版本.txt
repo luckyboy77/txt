@@ -1,6 +1,13 @@
 回退到上一个版本
 git reset --hard HEAD^
 
+注意：恢复版本之前请建一个分支备份：
+
 恢复之前最新的版本
 git reflog用来记录你的每一次命令
 git reset --hard 版本id
+
+强制提交到master分支（具体哪个分支请酌情修改）
+git push -f -u origin master    (master为分支)
+
+9e73c67159c91f7d8a8492127e13a4d485035fc8
